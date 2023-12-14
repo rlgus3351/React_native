@@ -6,38 +6,20 @@ import { useState } from 'react';
 const App = () => {
 
   const [result,setResult] = useState(0);
-  console.log('rendering',result);
 
+  setResult((result) => {
+    result = result+1;
+    return result;
+  });
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-    
-      <Text style={[styles.text]}>{result}</Text>
-      <Button
-        title='+'
-        onPress={() => {
-          setResult((prevState) =>{
-            console.log("prevState 1: ", prevState);
-            return prevState+1;
-          });
-        
-        }}
-        buttonStyle={styles.button}
-        buttonType={ButtonTypes.OPERATOR}
-      />
-      <View style={{paddingVertical:10}}></View>
-      <Button
-        title='-'
-        onPress={() => {
-          setResult((prevState) =>{
-            console.log("prevState 1: ", prevState);
-            return prevState-1;
-          });
-        }}
-        buttonStyle={styles.button}
-        buttonType={ButtonTypes.OPERATOR}
-      />
-
+      <View style={styles.resultContainer}>
+        <Text style={styles.text}>{result}</Text>
+      </View>
+      <View style={styles.buttonContainer}>
+        <Text>Button</Text>
+      </View>
     </View>
   );
 }
@@ -48,19 +30,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-},
+  },
   text:{
-    fontSize:30,
+    fontSize:60,
     fontWeight:'700',
     color:'green',
   },
-  error:{
-    color:'red',
+  resultContainer: {
+    flex:1,
+    backgroundColor:'#000000',
   },
-  button : {
-    width:100,
-    height:100,
-  },
+  buttonContainer:{
+    flex:1,
+    backgroundColor:'#A5B4FC'
+  }
 });
 
   
