@@ -1,19 +1,43 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import Button from './components/Button';
+import Button, { ButtonTypes } from './components/Button';
+import { useState } from 'react';
 
 const App = () => {
+
+  const [result,setResult] = useState(0);
+  console.log('rendering',result);
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
     
-      <Text style={[styles.text]}>Calc App</Text>
+      <Text style={[styles.text]}>{result}</Text>
       <Button
-        title={"1234"}
-        onPress={() => console.log("click!")}
-        color="purple"
-        />
-      <Button/>
+        title='+'
+        onPress={() => {
+          setResult((prevState) =>{
+            console.log("prevState 1: ", prevState);
+            return prevState+1;
+          });
+        
+        }}
+        buttonStyle={styles.button}
+        buttonType={ButtonTypes.OPERATOR}
+      />
+      <View style={{paddingVertical:10}}></View>
+      <Button
+        title='-'
+        onPress={() => {
+          setResult((prevState) =>{
+            console.log("prevState 1: ", prevState);
+            return prevState-1;
+          });
+        }}
+        buttonStyle={styles.button}
+        buttonType={ButtonTypes.OPERATOR}
+      />
+
     </View>
   );
 }
@@ -34,8 +58,8 @@ const styles = StyleSheet.create({
     color:'red',
   },
   button : {
-    backgroundColor : 'black',
-    color : 'white'
+    width:100,
+    height:100,
   },
 });
 
