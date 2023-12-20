@@ -2,37 +2,16 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, useWindowDimensions} from 'react-native';
 import { useState } from 'react';
 import Button, { ButtonTypes } from './components/Button';
-
 const Operators={
   CLEAR:'C',
   PLUS : "+",
   MINUS:"-",
   EQUAL:"="
 }
-
 const App = () => {
 
-  const calculate = () =>{
-    let calculatedNumber = 0;
-    let operator = '';
 
-    formula.forEach((value)=>{
-      if([Operators.PLUS , Operators.MINUS].includes(value)){
-        operator = value;
-      }else{
-        if(operator === Operators.PLUS){
-          calculatedNumber += value;
-        }else if(operator === Operators.MINUS){
-          calculatedNumber -= value;
-        }else{
-          calculatedNumber = value;
-        }
-      }
-    });
-    setResult(calculatedNumber);
-    setFormula([]);
-  };
-
+  
   const [result,setResult] = useState(0);
   const [formula, setFormula] = useState([]);
 
@@ -58,9 +37,8 @@ const App = () => {
         setResult(0);
         return;
       case Operators.EQUAL:
-        calculate();
         return;
-      default:{
+      default:
         const last = formula[formula.length - 1];
         if([Operators.PLUS, Operators.MINUS].includes(last)){
           setFormula((prev)=>{
@@ -70,11 +48,9 @@ const App = () => {
         }else{
           setFormula((prev)=>[...prev,operator]);
         }
+
         return;
-      }
-      
     }
-    
   }
 
   
@@ -110,8 +86,7 @@ const App = () => {
             {/* 0, = 버튼 */}
             <Button
               title="0"
-              key={0}
-              onPress={()=>onPressNumber(0)}
+              onPress={()=>{}}
               buttonType={ButtonTypes.NUMBER}
               buttonStyle={{
                 width:width * 2,
@@ -143,7 +118,7 @@ const App = () => {
             buttonStyle={{width, height:width, marginTop:1}}/>
             <Button 
             title='+'
-            onPress={()=> onPressOperator(Operators.PLUS)}
+            onPress={()=> onPressOperator(Operators.PLUS )}
             buttonType={ButtonTypes.OPERATOR}
             buttonStyle={{width, height:width*2+1, marginTop:1}}/>
           </View>
