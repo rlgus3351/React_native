@@ -5,18 +5,25 @@ import {
   KeyboardAvoidingView,
   Pressable,
   Keyboard,
-  Platform } 
+  Platform, 
+  Alert} 
   from "react-native";
-import {useEffect,useState, useRef} from "react";
+import { useEffect,useState, useRef } from "react";
+
+import { singIn } from "../api/auth";
 import Input,{IconNames, KeyboardTypes, ReturnKeyTypes} from "../components/Input";
 import SafeInputView from "../components/SafeInputView";
 import Button from "../components/Button";
+import propTypes from 'prop-types';
 
-const SingInScreen = ()=>{
+const SingInScreen = ({navigation}) => {
+    
+  
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
     const passwordRef = useRef(null);
     const [disabled, setDisabled] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(()=>{
       setDisabled(!email || !password);
@@ -24,10 +31,21 @@ const SingInScreen = ()=>{
 
 
 
-    const onSubmit = () =>{
-      Keyboard.dismiss();
-      console.log(email, password);
-    }
+    const onSubmit = async () =>{
+      if(!isLoading && !disabled){
+        try{
+          setIsLoading(true);
+          Keyboard.dismiss();
+          const data = await singIn(email,password);
+          setIsLoading(false);
+          navigation.navigate('List');
+        }catch(error){
+          Alert.alert('로그인 실패',error,[{
+            text:'확인', onPress: ()=>{setIsLoading(false)},
+          }]);
+        }
+      }
+    };
 
     return(
       <SafeInputView>
@@ -54,13 +72,17 @@ const SingInScreen = ()=>{
               onChangeText ={(password) => setPassword(password.trim())}
               secureTextEntry/>
               <View style = {styles.buttonContainer}>
-                <Button title = "로그인" onPress={onSubmit} disabled={disabled}></Button>
+                <Button title = "로그인" onPress={onSubmit} disabled={disabled} isLoading={isLoading}></Button>
               </View>
           </View>
       </SafeInputView>
     );
 };
 
+
+SingInScreen.prototype = {
+  navigation : propTypes.object,
+}
 const styles = StyleSheet.create({
     conatiner:{
         flex:1,
@@ -94,6 +116,6 @@ getnameAsync(true).then((name) =>{
 })
 .catch((error)=>{
   console.log(error);
-})
+});
 
 export default SingInScreen;
