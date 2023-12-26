@@ -111,11 +111,11 @@ const getnameAsync = (error) =>{
   });
 }
 
-getnameAsync(true).then((name) =>{
-  console.log(name);
-})
-.catch((error)=>{
-  console.log(error);
-});
+// getnameAsync(true).then((name) =>{
+//   console.log(name);
+// })
+// .catch((error)=>{
+//   console.log(error);
+// });
 
 export default SingInScreen;
