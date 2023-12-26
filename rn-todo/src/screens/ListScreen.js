@@ -1,13 +1,13 @@
 import {Button, StyleSheet, Text, View} from 'react-native';
 
-const ListScreen = ({navigation}) => {
-
+const ListScreen = ({navigation, route}) => {
+    console.log('rendering ListScrren:', route.params);
     return(
         <View style={Styles.container}>
             <Text style={{fontSize:30}}>List Screen</Text>
             <Button title='push' onPress={() => navigation.push('list')}/>
             <Button title="navigate"
-                onPress={()=> navigation.navigate('list')}
+                onPress={()=> navigation.navigate('list',{ts:Data.now() })}
             />
         </View>
     );
