@@ -5,9 +5,9 @@ const ListScreen = ({navigation, route}) => {
     return(
         <View style={Styles.container}>
             <Text style={{fontSize:30}}>List Screen</Text>
-            <Button title='push' onPress={() => navigation.push('list')}/>
+            <Button title='push' onPress={() => navigation.push('List')}/>
             <Button title="navigate"
-                onPress={()=> navigation.navigate('list',{ts:Data.now() })}
+                onPress={() => navigation.navigate('List')}
             />
         </View>
     );
