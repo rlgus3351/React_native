@@ -26,6 +26,14 @@ const SingInScreen = ({navigation}) => {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(()=>{
+      navigation.setOptions({
+        contentStyle:{
+          backgroundColor:'gainsboro',
+        },
+      })
+    },[navigation]);
+
+    useEffect(()=>{
       setDisabled(!email || !password);
     },[email,password]);
 
