@@ -28,10 +28,10 @@ const SingInScreen = ({navigation}) => {
     useEffect(()=>{
       navigation.setOptions({
         contentStyle:{
-          backgroundColor:'gainsboro',
+          backgroundColor:email ? 'lightskyblue':'gainsboro',
         },
       })
-    },[navigation]);
+    },[email,navigation]);
 
     useEffect(()=>{
       setDisabled(!email || !password);
