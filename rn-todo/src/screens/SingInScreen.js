@@ -5,9 +5,11 @@ import {
   KeyboardAvoidingView,
   Pressable,
   Keyboard,
-  Platform, 
+  Platform,
+
   Alert} 
   from "react-native";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { useEffect,useState, useRef } from "react";
 
 import { singIn } from "../api/auth";
@@ -18,20 +20,15 @@ import propTypes from 'prop-types';
 
 const SingInScreen = ({navigation}) => {
     
+    const insets = useSafeAreaInsets();
+    
+    console.log(insets);
   
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
     const passwordRef = useRef(null);
     const [disabled, setDisabled] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
-
-    useEffect(()=>{
-      navigation.setOptions({
-        contentStyle:{
-          backgroundColor:email ? 'lightskyblue':'gainsboro',
-        },
-      })
-    },[email,navigation]);
 
     useEffect(()=>{
       setDisabled(!email || !password);
@@ -57,14 +54,14 @@ const SingInScreen = ({navigation}) => {
 
     return(
       <SafeInputView>
-          <View style={styles.conatiner}>
-    
+        <SafeAreaView style={styles.conatiner}>
+            
             <Image
                 source={require('../../assets/main.png')}
                 style={styles.image}
             />
             <Input title={'이메일'}
-              placeholder ="your@eamil.com"
+              placeholder ="your@email.com"
               keyboardType={KeyboardTypes.EMAIL}
               returnKeyType={ReturnKeyTypes.NEXT}
               value = {email}
@@ -82,7 +79,8 @@ const SingInScreen = ({navigation}) => {
               <View style = {styles.buttonContainer}>
                 <Button title = "로그인" onPress={onSubmit} disabled={disabled} isLoading={isLoading}></Button>
               </View>
-          </View>
+        
+        </SafeAreaView>
       </SafeInputView>
     );
 };

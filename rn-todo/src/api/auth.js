@@ -1,4 +1,4 @@
-const USER_EMAIL = 'rlgus3351';
+const USER_EMAIL = 'r';
 const USER_PASSWORD = '123';
 
 export const singIn =  (email, password)=>{
