@@ -8,37 +8,19 @@ import SettingsScreen from '../screens/SettingScreen';
 
 const Stack = createNativeStackNavigator();
 
-const AuthStack = () => {
+const AuthStack = (props) => {
   return (
     <Stack.Navigator 
-      initialRouteName="SignIn"
       screenOptions={{
         contentStyle:{ backgroundColor:WHITE },
-        headerTitleAlign:"center",
-        headerTintColor:PRIMARY.DEFAULT,
-        headerTitleStyle:{
-          fontWeight:'700',
-        },
-        headerLeft:HeaderLeftButton,
-        
+        headerShown:false,
       }}
     >
+    
       <Stack.Screen
-        name="List" 
-        component={ListScreen}
-        options={{
-          title:'TODO List',
-          headerRight:HeaderRightButton,
-        }}/>
-      <Stack.Screen
-        name="SignIn" 
-        component={SingInScreen}
-        options={{
-          title:"로그인",
-          headerShown:false,
-        }}
-        />
-      <Stack.Screen name='Settings' component={SettingsScreen}/>
+        name="SignIn">
+          {(screenProps) => <SingInScreen {...screenProps} {...props} />}
+        </Stack.Screen>
     </Stack.Navigator>
   );
 };

@@ -18,7 +18,7 @@ import SafeInputView from "../components/SafeInputView";
 import Button from "../components/Button";
 import propTypes from 'prop-types';
 
-const SingInScreen = ({navigation}) => {
+const SingInScreen = ({setUser}) => {
     
     const insets = useSafeAreaInsets();
     
@@ -43,7 +43,7 @@ const SingInScreen = ({navigation}) => {
           Keyboard.dismiss();
           const data = await singIn(email,password);
           setIsLoading(false);
-          navigation.navigate('List');
+          setUser(data);
         }catch(error){
           Alert.alert('로그인 실패',error,[{
             text:'확인', onPress: ()=>{setIsLoading(false)},
@@ -105,23 +105,6 @@ const styles = StyleSheet.create({
       height:200,
     },
 });
-const getnameAsync = (error) =>{
-  return new Promise((resolve,reject)=>{
-    setTimeout(()=>{
-      if(error){
-        reject('error');
-      }else{
-        resolve('[async]Beomjun');
-      }
-    },1000);
-  });
-}
 
-// getnameAsync(true).then((name) =>{
-//   console.log(name);
-// })
-// .catch((error)=>{
-//   console.log(error);
-// });
 
 export default SingInScreen;
