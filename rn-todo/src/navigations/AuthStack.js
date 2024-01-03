@@ -5,7 +5,7 @@ import { WHITE } from '../colors';
 
 const Stack = createNativeStackNavigator();
 
-const AuthStack = (props) => {
+const AuthStack = () => {
   return (
     <Stack.Navigator 
       screenOptions={{
@@ -14,10 +14,7 @@ const AuthStack = (props) => {
       }}
     >
     
-      <Stack.Screen
-        name="SignIn">
-          {(screenProps) => <SingInScreen {...screenProps} {...props} />}
-        </Stack.Screen>
+      <Stack.Screen name="SignIn" component={SingInScreen}/>
     </Stack.Navigator>
   );
 };

@@ -9,6 +9,8 @@ import {
 
   Alert} 
   from "react-native";
+
+
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { useEffect,useState, useRef } from "react";
 
@@ -17,8 +19,10 @@ import Input,{IconNames, KeyboardTypes, ReturnKeyTypes} from "../components/Inpu
 import SafeInputView from "../components/SafeInputView";
 import Button from "../components/Button";
 import propTypes from 'prop-types';
+import UserContext from "../contexts/UserContext";
 
-const SingInScreen = ({setUser}) => {
+
+const SingInScreen = () => {
     
     const insets = useSafeAreaInsets();
     
@@ -36,7 +40,7 @@ const SingInScreen = ({setUser}) => {
 
 
 
-    const onSubmit = async () =>{
+    const onSubmit = async (setUser) =>{
       if(!isLoading && !disabled){
         try{
           setIsLoading(true);
@@ -51,38 +55,46 @@ const SingInScreen = ({setUser}) => {
         }
       }
     };
-
     return(
-      <SafeInputView>
-        <SafeAreaView style={styles.conatiner}>
-            
-            <Image
-                source={require('../../assets/main.png')}
-                style={styles.image}
-            />
-            <Input title={'이메일'}
-              placeholder ="your@email.com"
-              keyboardType={KeyboardTypes.EMAIL}
-              returnKeyType={ReturnKeyTypes.NEXT}
-              value = {email}
-              iconName={IconNames.EMAIL}
-              onChangeText ={(email) => setEmail(email.trim())}
-              onSubmitEditing={ () => passwordRef.current.focus()}
-              />
-            <Input title={'비밀번호'} 
-              ref = {passwordRef}
-              returnKeyType={ReturnKeyTypes.DONE} 
-              value = {password}
-              iconName={IconNames.PASSWORD}
-              onChangeText ={(password) => setPassword(password.trim())}
-              secureTextEntry/>
-              <View style = {styles.buttonContainer}>
-                <Button title = "로그인" onPress={onSubmit} disabled={disabled} isLoading={isLoading}></Button>
-              </View>
-        
-        </SafeAreaView>
-      </SafeInputView>
+      <UserContext.Consumer>
+        {({setUser}) => {
+
+          return(
+            <SafeInputView>
+              <SafeAreaView style={styles.conatiner}>
+                  
+                  <Image
+                      source={require('../../assets/main.png')}
+                      style={styles.image}
+                  />
+                  <Input title={'이메일'}
+                    placeholder ="your@email.com"
+                    keyboardType={KeyboardTypes.EMAIL}
+                    returnKeyType={ReturnKeyTypes.NEXT}
+                    value = {email}
+                    iconName={IconNames.EMAIL}
+                    onChangeText ={(email) => setEmail(email.trim())}
+                    onSubmitEditing={ () => passwordRef.current.focus()}
+                    />
+                  <Input title={'비밀번호'} 
+                    ref = {passwordRef}
+                    returnKeyType={ReturnKeyTypes.DONE} 
+                    value = {password}
+                    iconName={IconNames.PASSWORD}
+                    onChangeText ={(password) => setPassword(password.trim())}
+                    onSubmitEditing ={() => onSubmit(setUser)}
+                    secureTextEntry/>
+                    <View style = {styles.buttonContainer}>
+                      <Button title = "로그인" onPress={() => onSubmit(setUser)} disabled={disabled} isLoading={isLoading}></Button>
+                    </View>
+              
+              </SafeAreaView>
+            </SafeInputView>
+          );
+        }}
+      </UserContext.Consumer>
     );
+
 };
 
 
