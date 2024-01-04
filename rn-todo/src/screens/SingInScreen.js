@@ -12,21 +12,21 @@ import {
 
 
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
-import { useEffect,useState, useRef } from "react";
+import { useContext, useEffect,useState, useRef } from "react";
 
 import { singIn } from "../api/auth";
 import Input,{IconNames, KeyboardTypes, ReturnKeyTypes} from "../components/Input";
 import SafeInputView from "../components/SafeInputView";
 import Button from "../components/Button";
 import propTypes from 'prop-types';
-import UserContext from "../contexts/UserContext";
+import { useUserContext } from "../contexts/UserContext";
 
 
 const SingInScreen = () => {
     
     const insets = useSafeAreaInsets();
     
-    console.log(insets);
+    const { setUser } = useUserContext();
   
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
@@ -82,10 +82,10 @@ const SingInScreen = () => {
                     value = {password}
                     iconName={IconNames.PASSWORD}
                     onChangeText ={(password) => setPassword(password.trim())}
-                    onSubmitEditing ={() => onSubmit(setUser)}
+                    onSubmitEditing ={onSubmit}
                     secureTextEntry/>
                     <View style = {styles.buttonContainer}>
-                      <Button title = "로그인" onPress={() => onSubmit(setUser)} disabled={disabled} isLoading={isLoading}></Button>
+                      <Button title = "로그인" onPress={onSubmit} disabled={disabled} isLoading={isLoading}></Button>
                     </View>
               
               </SafeAreaView>
