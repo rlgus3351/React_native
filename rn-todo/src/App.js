@@ -1,23 +1,15 @@
+
 import { StatusBar } from 'expo-status-bar';
-import Navigation from './navigations/Navigation';
 import { UserProvider } from './contexts/UserContext';
+import Navigation from './navigations/Navigation';
 
-
-const App = () =>{
+const App = () => {
   return (
     <UserProvider>
       <StatusBar style="dark" />
-        <Navigation/>
+      <Navigation />
     </UserProvider>
-      
-  
-    );
-
+  );
 };
 
-
-
-
-
 export default App;
-
