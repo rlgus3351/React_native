@@ -1,10 +1,10 @@
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 
 const ListScreen = () => {
 
     return(
         <View style={Styles.container}>
-            
+            <Text style={{fontSize:30}}>List Screen</Text>
         </View>
     );
 };

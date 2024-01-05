@@ -28,7 +28,7 @@ const SignInScreen = ({ navigation }) => {
                 navigation.navigate('List');
             } catch (error) {
                 Alert.alert('로그인 실패', error, [
-                    { text: '확인', onPress: () => setIsLoading(false)},
+                    { text : '확인', onPress: () => setIsLoading(false)},
                 ]);
             }
         }
@@ -64,7 +64,7 @@ const SignInScreen = ({ navigation }) => {
                         disabled={disabled}
                         isLoading={isLoading}/>
                 </View>
-            </View>e
+            </View>
         </SafeInputView>
     );
 };
