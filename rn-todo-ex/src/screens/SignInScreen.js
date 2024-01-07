@@ -1,4 +1,5 @@
 import {Image, StyleSheet, View, Keyboard, Alert} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Input, {IconNames, KeyboardTypes, ReturnKeyTypes} from "../components/Input";
 import SafeInputView from "../components/SafeInputView";
 import {useState, useRef, useEffect} from "react";
@@ -37,7 +38,7 @@ const SignInScreen = ({ navigation }) => {
 
     return (
         <SafeInputView>
-            <View style={styles.container}>
+            <SafeAreaView style={styles.container}>
                 <Image source={require('../../assets/main.png')} style={styles.image}/>
                 <Input
                     title={'이메일'}
@@ -64,7 +65,7 @@ const SignInScreen = ({ navigation }) => {
                         disabled={disabled}
                         isLoading={isLoading}/>
                 </View>
-            </View>
+            </SafeAreaView>
         </SafeInputView>
     );
 };
