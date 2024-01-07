@@ -7,7 +7,7 @@ import Button from "../components/Button";
 import {singIn} from "../api/auth";
 import propTypes from 'prop-types';
 
-const SignInScreen = ({ navigation }) => {
+const SignInScreen = ({ setUser }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const passwordRef = useRef(null);
@@ -26,7 +26,7 @@ const SignInScreen = ({ navigation }) => {
                 const data = await singIn(email, password);
                 console.log(data);
                 setIsLoading(false);
-                navigation.navigate('List');
+                setUser(data);
             } catch (error) {
                 Alert.alert('로그인 실패', error, [
                     { text : '확인', onPress: () => setIsLoading(false)},

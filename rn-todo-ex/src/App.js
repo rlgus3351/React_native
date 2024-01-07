@@ -15,6 +15,7 @@ const App = () => {
                 <MainStack user={user} setUser = {setUser}/>
             ):(
                 <AuthStack user={user} setUser = {setUser}/>
+            )}
         </NavigationContainer>
     )
 };
