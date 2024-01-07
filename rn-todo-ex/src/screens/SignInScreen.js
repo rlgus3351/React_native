@@ -2,11 +2,11 @@ import {Image, StyleSheet, View, Keyboard, Alert} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
 import Input, {IconNames, KeyboardTypes, ReturnKeyTypes} from "../components/Input";
 import SafeInputView from "../components/SafeInputView";
-import {useContext, useState, useRef, useEffect} from "react";
+import { useState, useRef, useEffect} from "react";
 import Button from "../components/Button";
 import {singIn} from "../api/auth";
 import propTypes from 'prop-types';
-import UserContext from "../contexts/UserContext";
+import {useUserContext} from "../contexts/UserContext";
 
 
 const SignInScreen = () => {
@@ -15,7 +15,7 @@ const SignInScreen = () => {
     const passwordRef = useRef(null);
     const [disabled, setDisabled] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
-    const {setUser} = useContext(UserContext);
+    const {setUser} = useUserContext();
     useEffect(() => {
         setDisabled(!email || !password);
     }, [email, password]);
