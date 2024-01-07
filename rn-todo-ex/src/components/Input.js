@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
         paddingHorizontal:10,
         height:42,
         paddingLeft:30,
-        borderCo:GRAY.DEFAULT,
+        borderColor:GRAY.DEFAULT,
     },
     hasValueInput:{
         borderColor:BLACK,

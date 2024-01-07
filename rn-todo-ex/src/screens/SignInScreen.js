@@ -1,19 +1,21 @@
 import {Image, StyleSheet, View, Keyboard, Alert} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {SafeAreaView} from "react-native-safe-area-context";
 import Input, {IconNames, KeyboardTypes, ReturnKeyTypes} from "../components/Input";
 import SafeInputView from "../components/SafeInputView";
-import {useState, useRef, useEffect} from "react";
+import {useContext, useState, useRef, useEffect} from "react";
 import Button from "../components/Button";
 import {singIn} from "../api/auth";
 import propTypes from 'prop-types';
+import UserContext from "../contexts/UserContext";
 
-const SignInScreen = ({ setUser }) => {
+
+const SignInScreen = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const passwordRef = useRef(null);
     const [disabled, setDisabled] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
-
+    const {setUser} = useContext(UserContext);
     useEffect(() => {
         setDisabled(!email || !password);
     }, [email, password]);
@@ -24,18 +26,19 @@ const SignInScreen = ({ setUser }) => {
                 setIsLoading(true);
                 Keyboard.dismiss();
                 const data = await singIn(email, password);
-                console.log(data);
                 setIsLoading(false);
                 setUser(data);
             } catch (error) {
                 Alert.alert('로그인 실패', error, [
-                    { text : '확인', onPress: () => setIsLoading(false)},
+                    {
+                        text: '확인',
+                        onPress: () => setIsLoading(false)
+                    }
                 ]);
             }
         }
 
     };
-
     return (
         <SafeInputView>
             <SafeAreaView style={styles.container}>
@@ -48,7 +51,7 @@ const SignInScreen = ({ setUser }) => {
                     value={email}
                     onChangeText={(email) => setEmail(email.trim())}
                     iconName={IconNames.EMAIL}
-                    onSubmitEditing={()=>passwordRef.current.focus()}/>
+                    onSubmitEditing={() => passwordRef.current.focus()}/>
                 <Input
                     title={'비밀번호'}
                     ref={passwordRef}
@@ -71,7 +74,7 @@ const SignInScreen = ({ setUser }) => {
 };
 
 SignInScreen.propTypes = {
-    navigation : propTypes.object,
+    navigation: propTypes.object
 };
 
 const styles = StyleSheet.create({
