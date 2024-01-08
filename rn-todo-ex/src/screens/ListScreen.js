@@ -1,12 +1,27 @@
-import {Button, StyleSheet, Text, View} from 'react-native';
+import {ScrollView,StyleSheet, Text, View} from 'react-native';
 
-const ListScreen = ({ navigation }) => {
+const ListScreen = () => {
+    const todos = [];
+    for (let i=1; i<501; i++){
+        todos.push({value:i});
+    }
 
     return(
         <View style={Styles.container}>
-            <Text style={{fontSize:30}}>List Screen</Text>
-            <Button title="push" onPress={()=> navigation.push('List')}/>
-            <Button title='navigate' onPress={() => navigation.navigate('List')}/>
+            <ScrollView>
+            {todos.map((item, index) => {
+                return(
+                    <View
+                        key={index}
+                        style={{ paddingVertical:10, paddingHorizontal : 20 }}
+                    >
+                        <Text style={{ fontSize:20 }}>{item.value}</Text>
+                    </View>
+
+                );
+            })}
+            </ScrollView>
+        
         </View>
     );
 };
@@ -15,8 +30,7 @@ const ListScreen = ({ navigation }) => {
 const Styles = StyleSheet.create({
     container:{
         flex:1,
-        justifyContent:'center',
-        alignItems : 'center',
+        
     },
 });
 
