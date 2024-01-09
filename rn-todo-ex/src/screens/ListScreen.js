@@ -1,36 +1,48 @@
-import {ScrollView,StyleSheet, Text, View} from 'react-native';
+import {FlatList,StyleSheet, View} from 'react-native';
+import ListItem from '../components/ListItem';
+import { GRAY } from '../color';
+
+const Separator = () => {
+    return <View style = {styles.separator}></View>;
+}
+
 
 const ListScreen = () => {
-    const todos = [];
-    for (let i=1; i<501; i++){
-        todos.push({value:i});
-    }
+    const todos = [
+        { id :1, task:'React Native',isDone:false},
+        { id :2, task:'FlatList',isDone:false},
+        { id :3, task:'React Navigation',isDone:true},
+        { id :4, task:'TODO App',isDone:false},
+        { id :5, task:'React.memo',isDone:true},
+    ];
+    
 
     return(
-        <View style={Styles.container}>
-            <ScrollView>
-            {todos.map((item, index) => {
-                return(
-                    <View
-                        key={index}
-                        style={{ paddingVertical:10, paddingHorizontal : 20 }}
-                    >
-                        <Text style={{ fontSize:20 }}>{item.value}</Text>
-                    </View>
-
-                );
-            })}
-            </ScrollView>
-        
+        <View style={styles.container}>
+            <FlatList 
+                data={todos}
+                keyExtractor={(item)=> item.id.toString()}
+                renderItem={({item}) => <ListItem item={item} />}
+                windowSize={5}
+                ItemSeparatorComponent={Separator}
+                ListHeaderComponent={View}
+                ListHeaderComponentStyle={{height:10}}
+            />
         </View>
     );
 };
 
 
-const Styles = StyleSheet.create({
+
+const styles = StyleSheet.create({
     container:{
-        flex:1,
-        
+        flex:1,  
+    },
+    separator : {
+        height:1,
+        backgroundColor: GRAY.LIGHT,
+        marginVertical:10,
+        marginHorizontal:10,
     },
 });
 
