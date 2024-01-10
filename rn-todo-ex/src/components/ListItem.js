@@ -1,11 +1,31 @@
 import { memo } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import propTypes from 'prop-types';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { DANGER, BLACK, PRIMARY, GRAY } from '../color';
 
 const ListItem = memo(({item}) => {
+    const checkboxProps = {
+        name : item.isDone ? 'checkbox-marked' : "checkbox-blank-outline",
+        color : item.isDone ? PRIMARY.DEFAULT : BLACK,
+        size : 20,
+    };
+
     return(
         <View style={styles.container}>
-            <Text>{item.task}</Text>
+            <Pressable onPress={()=>{}} hitSlop={10}>
+                <MaterialCommunityIcons {...checkboxProps}/>
+            </Pressable>
+            <View style={styles.task}>
+                <Text style={item.isDone && {color : GRAY.DEFAULT}}>{item.task}</Text>
+            </View>
+            <Pressable onPress={()=>{}} hitSlop={10}>
+                <MaterialCommunityIcons
+                    name="trash-can"
+                    size={20}
+                    color={DANGER.DEFAULT}
+                />
+            </Pressable>
         </View>
     );
 });
@@ -22,6 +42,12 @@ const styles = StyleSheet.create({
         paddingHorizontal:20, 
         borderWidth:1,
         borderRadius:8,
+        flexDirection :'row',
+        alignItems:'center',
+    },
+    task:{
+        flex:1,
+        marginHorizontal:10,
     },
 });
 
