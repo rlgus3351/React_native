@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { nanoid } from 'nanoid';
 
 const ListScreen = () => {
+    const [isBottom, setIsBottom] = useState(false);
 
     const { bottom } = useSafeAreaInsets();
     const [todos, setTodos] = useState([
@@ -37,8 +38,8 @@ const ListScreen = () => {
 
     return (
         <View style={{ flex: 1, paddingBottom:bottom }}>
-            {todos.length ? <List data={todos} /> : <EmptyList />}
-            <InputFAB onInsert={onInsert}/>
+            {todos.length ? <List data={todos} setIsBottom={setIsBottom} /> : <EmptyList />}
+            <InputFAB onInsert={onInsert} isBottom={isBottom}/>
         </View>
     );
 };

@@ -4,10 +4,11 @@ import { MaterialCommunityIcons} from '@expo/vector-icons';
 import { useEffect, useRef,useState } from "react";
 import propTypes from 'prop-types';
 
+const RIGHT = 10;
 const BOTTOM = 30;
 const BUTTON_WIDTH = 60;
 
-const InputFAB = ({ onInsert }) => {
+const InputFAB = ({ onInsert , isBottom}) => {
     const [text, setText] = useState('');
     const [isOpend, setIsOpended] = useState(false);
     const inputRef = useRef();
@@ -15,6 +16,14 @@ const InputFAB = ({ onInsert }) => {
     const [keyboardHeight, setKeyboardHeight] = useState(BOTTOM);
     const inputWidth = useRef(new Animated.Value(BUTTON_WIDTH)).current;
     const buttonRotation = useRef(new Animated.Value(0)).current;
+    const buttonRight = useRef(new Animated.Value(RIGHT)).current;
+
+    useEffect(()=>{
+        Animated.timing(buttonRight,{
+            toValue:isBottom ? RIGHT-BUTTON_WIDTH:RIGHT,
+            useNativeDriver : false,
+        }).start();
+    },[buttonRight, isBottom]);
 
     const onPressInsert = () => {
         const task = text.trim();
@@ -95,6 +104,9 @@ const InputFAB = ({ onInsert }) => {
                     {
                         justifyContent: 'center',
                         bottom:keyboardHeight,
+                        width:inputWidth,
+                        right:buttonRight,
+                        position:'absolute',
                     },
                     isOpend && {width : windowWidth-20},
                 ]}
@@ -120,7 +132,9 @@ const InputFAB = ({ onInsert }) => {
                     styles.shape,
                     {
                         bottom:keyboardHeight,
-                        transform:[{ rotate:spin }]
+                        transform:[{ rotate:spin }],
+                        right:buttonRight,
+                        position:"absolute",
                     },
                 ]}
             >
@@ -141,15 +155,12 @@ const InputFAB = ({ onInsert }) => {
 
 InputFAB.propTypes = {
     onInsert : propTypes.func.isRequired,
+    isBottom : propTypes.bool.isRequired,
 };
 
 
 const styles = StyleSheet.create({
-    position : {
-        position:'absolute',
-        bottom:BOTTOM,
-        right:10,
-    },
+
     shape:{
       height:BUTTON_WIDTH,
       width:BUTTON_WIDTH,
@@ -179,3 +190,5 @@ const styles = StyleSheet.create({
 });
 
 export default InputFAB;
+
+
