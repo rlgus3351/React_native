@@ -7,12 +7,14 @@ const Separator = () => {
     return <View style={styles.separator}></View>;
 };
 
-const List = ({data, setIsBottom}) => {
+const List = ({ data, setIsBottom, onDelete ,onToggle}) => {
     return (
         <FlatList
             data={data}
-            keyExtractor={(item)=>item.id.toString()}
-            renderItem={({item}) => <ListItem item={item}/>}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({item}) => (
+                <ListItem item={item} onDelete={onDelete} onToggle={onToggle}/>
+                )}
             windowSize={2}
             ItemSeparatorComponent={Separator}
             ListHeaderComponent={View}
@@ -39,6 +41,8 @@ const styles = StyleSheet.create({
 List.propTypes = {
     data:propTypes.array.isRequired,
     setIsBottom:propTypes.func.isRequired,
+    onDelete : propTypes.func.isRequired,
+    onToggle : propTypes.func.isRequired,
 };
 
 export default List;
