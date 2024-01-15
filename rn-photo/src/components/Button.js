@@ -2,9 +2,9 @@ import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-nati
 import propTypes from 'prop-types';
 import {WHITE, GRAY,PRIMARY} from '../colors';
 
-const Button = ({sytles, title, onPress, disabled, isLoading}) => {
+const Button = ({styles, title, onPress, disabled, isLoading}) => {
     return(
-        <View style={[defaultStyles.container, sytles?.container]}>
+        <View style={[defaultStyles.container, styles?.container]}>
             <Pressable
                 onPress={()=> onPress()}
                 disabled={disabled|| isLoading}
@@ -22,7 +22,7 @@ const Button = ({sytles, title, onPress, disabled, isLoading}) => {
                             }
                         })(),
                     },
-                    sytles?.button,
+                    styles?.button,
                 ]}
             >
                 {isLoading ? (
