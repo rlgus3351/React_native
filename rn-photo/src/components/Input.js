@@ -12,6 +12,13 @@ export const ReturnKeyTypes = {
 export const InputTypes = {
     EMAIL:'EMAIL',
     PASSWORD:'PASSWORD',
+    PASSWORD_CONFIRM : 'PASSWORD_CONFIRM',
+};
+
+const PasswordProps = {
+    keyboardType : 'default',
+    secureTextEntry : true,
+    iconName : {active : 'lock', inactive :'lock-outline'},
 };
 
 const InputTypesProps = {
@@ -25,10 +32,13 @@ const InputTypesProps = {
     PASSWORD:{
         title:'PASSWORD',
         placeholder : 'PASSWORD',
-        keyboardType: 'default',
-        secureTextEntry : true,
-        iconName : {active : 'lock', inactive:'lock-outline'},
+        ...PasswordProps,
     },
+    PASSWORD_CONFIRM:{
+        title:'PASSWORD CONFIRM',
+        placeholder:'PASSWORD CONFIRM',
+        ...PasswordProps,
+    }
 };
 
 const Input = forwardRef(({ inputType, styles, ...props }, ref) => {
@@ -40,6 +50,7 @@ const Input = forwardRef(({ inputType, styles, ...props }, ref) => {
         iconName:{ active , inactive},
     } = InputTypesProps[inputType];
     const {value} = props;
+    console.log(value);
     const [isFocused, setIsFocused] = useState(false);
     
     return(
