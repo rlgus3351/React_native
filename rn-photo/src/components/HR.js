@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet,Text,View } from "react-native";
 import propTypes from 'prop-types';
-import { GRAY,WHITE } from "../colors";
+import {GRAY,WHITE} from '../colors';
 
-const HR = ({styles, text}) =>{
+const HR = ({ styles, text }) =>{
     return(
         <View style={[defaultStyles.container, styles?.container]}>
             <View style={[defaultStyles.line, styles?.line]}></View>
@@ -13,27 +13,29 @@ const HR = ({styles, text}) =>{
     );
 };
 
+
 HR.propTypes = {
-    styles : propTypes.object,
+    styles:propTypes.object,
     text:propTypes.string,
 };
 
 const defaultStyles = StyleSheet.create({
-    container : {
+    container:{
         width:'100%',
         alignItems:'center',
         justifyContent:'center',
     },
+
     line : {
         ...StyleSheet.absoluteFill,
         height:'50%',
         borderBottomWidth : 1,
-        borderBottomColor : GRAY.DARK,
+        borderbottomColor:GRAY.DARK,
     },
-    text : {
+    text:{
         backgroundColor:WHITE,
         paddingHorizontal:10,
-        color:GRAY.DARK, 
+        color:GRAY.DARK,
     },
 });
 

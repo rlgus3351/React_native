@@ -3,7 +3,7 @@ export const BLACK = '#000000';
 
 
 export const PRIMARY = {
-    LIGTH : '#FDBA74',
+    LIGHT : '#FDBA74',
     DEFAULT : '#f97316',
     DARK : '#C2410C',
 
