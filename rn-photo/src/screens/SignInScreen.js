@@ -1,6 +1,6 @@
 import {Image, StyleSheet, View, Keyboard} from 'react-native';
 import Input,{InputTypes, ReturnKeyTypes} from '../components/Input';
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, useReducer } from 'react';
 import Button from '../components/Button';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import SafeInputView from '../components/SafeInputView';
@@ -10,6 +10,7 @@ import { AuthRoutes } from '../navigations/routes';
 import HR from '../components/HR';
 import { StatusBar, ScrollView } from 'react-native';
 import { WHITE } from '../colors';
+import { AuthFormTypes, authFormReducer, initAuthForm } from '../reducers/authFormReducer';
 
 
 
@@ -17,40 +18,32 @@ const SignInScreen = () =>{
     const navigation = useNavigation();
     const { top, bottom } = useSafeAreaInsets();
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const [disabled, setDisabled] = useState(false);
-
     const passwordRef = useRef();
 
-    useEffect(()=>{
-        console.log("SignIn Mount");
-        return () => console.log("SignIn UnMount");
-    },[]);
+    const [form, dispatch] = useReducer(authFormReducer, initAuthForm);
 
     useFocusEffect(
         useCallback(()=>{
-            console.log('Focus');
-            return() => {
-                setEmail('');
-                setPassword('');
-                setIsLoading(false);
-                setDisabled(true);
-            };
+            return () => dispatch({ type : AuthFormTypes.RESET});
         },[])
     );
-
-    useEffect(()=>{
-        setDisabled(!email || !password);
-    },[email,password]);
+    
+    const updateForm = (payload) =>{
+        const newForm ={...form, ...payload};
+        const disabled = !newForm.email || !newForm.password;
+        dispatch({
+            type:AuthFormTypes.UPDATE_FORM,
+            payload : {disabled, ...payload},
+        });
+    };
+    
 
     const onSubmit = () => {
         Keyboard.dismiss();
-        if(!disabled && !isLoading){
-            setIsLoading(true);
-            console.log(email,password);
-            setIsLoading(false);
+        if(!form.disabled && !form.isLoading){
+            dispatch({ type:AuthFormTypes.TOGGLE_LOADING});
+            console.log(form.email, form.password);
+            dispatch({ type:AuthFormTypes.TOGGLE_LOADING});
         }
     };
 
@@ -75,8 +68,8 @@ const SignInScreen = () =>{
                     keyboardShouldPersistTaps="always"
                     >
                     <Input
-                        value={email}
-                        onChangeText={(text) => setEmail(text.trim())}
+                        value={form.email}
+                        onChangeText={(text) => updateForm({email:text.trim()})}
                         inputType={InputTypes.EMAIL}
                         returnKeyType={ReturnKeyTypes.NEXT}
                         onSubmitEditing ={()=> passwordRef.current.focus()}
@@ -84,8 +77,8 @@ const SignInScreen = () =>{
                         />
                     <Input
                         ref={passwordRef}
-                        value={password}
-                        onChangeText={(text) => setPassword(text.trim())}
+                        value={form.password}
+                        onChangeText={(text) => updateForm({password : text.trim()})}
                         inputType={InputTypes.PASSWORD}
                         returnKeyType={ReturnKeyTypes.DONE}
                         onSubmitEditing={onSubmit}
@@ -94,8 +87,8 @@ const SignInScreen = () =>{
                     <Button
                         title='로그인'
                         onPress={onSubmit}
-                        disabled={disabled}
-                        isLoading={isLoading}
+                        disabled={form.disabled}
+                        isLoading={form.isLoading}
                         styles={{container:{marginTop:20}}}
                     />
                     <HR text={'OR'} styles={{ container : { marginVertical :30 } }}/>

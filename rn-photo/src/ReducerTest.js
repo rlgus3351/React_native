@@ -9,7 +9,8 @@ const CountTypes={
 const reducer = (state, action) =>{
     switch(action.type){
         case CountTypes.INCREMENT:
-            return {count : state.count +1};
+            state.count = state.count +1;
+            return state;
         case CountTypes.DECREMENT:
             return {count : state.count - 1};
         default:

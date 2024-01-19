@@ -6,9 +6,9 @@ const App = () => {
   return (
     <>
         <StatusBar style='dark'/>
-        {/* <Navigation/> */}
-        <ReducerTest/>
-      
+        <Navigation/>
+        
+
     </>
   );
 };
