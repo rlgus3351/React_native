@@ -1,0 +1,87 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<jsp:include page="../common/header.jsp" />
+
+      <!--Container-->
+    <main id="container">
+        <div class="main">
+                <!--Login-->
+                <div class="page_f1">
+                    <section class="page_cont">
+
+                        <div class="top">
+                            <h2>로그인</h2>
+                        </div>
+                        <form action="" method="">
+                            <div class="inner">
+                                <p class="input_id">
+                                    <label for="login_id">아이디</label>
+                                    <input type="text" id="login_id" name="login_id" class="inp full" onfocus="if($(this).val()== '아이디 ') $(this).val('');" onblur="if($(this).val()== '') $(this).val('아이디 ');" onkeydown="if(event.keyCode==13) actlogin('<%=reUrl%>');" value="" placeholder="아이디를 입력하세요"/>
+                                </p>
+                                <p class="input_pw">
+                                    <label for="login_pw">비밀번호</label>
+                                    <input type="password" id="login_pwd" name="login_pwd" class="inp full" onfocus="if($(this).val()== '비밀번호'){ $(this).val(''); $(this).attr('type','password');}" onblur="if($(this).val()== '') {$(this).val('비밀번호'); $(this).attr('type','text');}" onkeydown="if(event.keyCode==13) actlogin('<%=reUrl%>');" value="" placeholder="비밀번호를 입력하세요"/>
+                                </p>
+                                <button type="button" class="btn_login blue" onclick="actlogin('<%=reUrl%>')">로그인</button>
+                            </div>
+                        </form>
+                        <div class="util">
+                            <ul>
+                                <li>
+                                    <p>아직 회원이 아니신가요?</p>
+                                    <div class="btn_join_login"><a href="/join.do">가입하기</a></div>
+                                    <div  class="mbr_type_is"><a href="/join.do?mode=findUser">아이디/비밀번호를 잊으셨나요?</a></div>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                    </section>
+                    
+                </div>
+                <!--//Login-->
+                
+            </div>
+            
+        </main>
+        <!--//Container-->
+    
+        
+        <script type="text/javascript">
+            //내폰담기 목록담기
+      function actlogin(reUrl){
+        var id = $('#login_id').val(); 
+        var pwd = $('#login_pwd').val();
+        if(id == "" || pwd == ""){
+            alert("로그인 정보를 입력해주세요.");
+            return;
+        }
+        var params = {
+            "userId":id
+        	,"userPwd":pwd
+        	,"reUrl":reUrl
+        };
+
+      	jQuery.post("/sys/loginAjaxJson.do",jQuery.param(params),
+      	function(data) {
+      		if(data.succCode == "OK"){
+      			if(data.reUrl != ""){
+      				reUrl = data.reUrl;
+      				location.href = reUrl;
+      			}else{
+      				alert("There are no accessible menus.");
+      				return;
+      			}
+      			return;
+      		}else if(data.succCode == "MISS"){
+      			alert("ID and password do not match.");
+      			return;
+      		}else if(data.succCode == "MISS_ADMIN"){
+      			alert("Only administrators can log in.\nPlease make sure that the entered ID is an administrator.");
+      			return;
+      		}else{
+      			alert("로그인 정보가 없습니다");
+      			return;
+      		}
+      	});
+      }
+      </script>
+      <jsp:include page="../common/footer.jsp" flush="false" ></jsp:include>
