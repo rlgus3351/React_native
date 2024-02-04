@@ -1,13 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import SingInScreen from './screens/SignInScreen';
 
-const App = () => {
+const App = () =>{
   return (
-    <View style={{marginTop:50}}>
+    <View style={styles.container}>
+      
       <StatusBar style="dark" />
-      <Text style={{fontSize:30}} >Photo App</Text>
+        <SingInScreen/>
     </View>
   );
-};
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+});
 
 export default App;
