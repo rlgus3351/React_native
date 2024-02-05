@@ -9,6 +9,7 @@ const Stack = createNativeStackNavigator();
 const AuthStack = () =>{
     return(
         <Stack.Navigator
+        initialRouteName={AuthRoutes.SIGN_IN}
             screenOptions={{
                 contentStyle : {backgroundColor:WHITE},
                 headerShown:false,

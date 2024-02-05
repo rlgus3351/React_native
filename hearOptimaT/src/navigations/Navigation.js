@@ -1,24 +1,16 @@
-import { NavigationContainer } from "@react-navigation/native";
-import AuthStack from "./AuthStack";
-// import * as SplashScreen from 'expo-splash-screen';
-// import { useEffect } from "react";
+import { useUserContext } from '../contexts/UserContext';
+import { NavigationContainer } from '@react-navigation/native';
+import MainStack from './Mainstack';
+import AuthStack from './AuthStack';
 
+const Navigation = () => {
+  const { user } = useUserContext();
 
-const Navigation =  () => {
-    // useEffect(()=>{
-    //     (async () =>{
-    //         try{
-    //             await SplashScreen.preventAutoHideAsync();
-    //         }catch(e){
-    //             console.log(e);
-    //         }
-    //     })();
-    // },[]);
-    return (
-        <NavigationContainer>
-            <AuthStack/>
-        </NavigationContainer>
-    );
+  return (
+    <NavigationContainer>
+      { user ? <MainStack /> : <AuthStack />}
+    </NavigationContainer>
+  );
 };
 
 export default Navigation;

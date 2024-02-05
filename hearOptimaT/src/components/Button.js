@@ -20,8 +20,8 @@ const Button = ({title, onPress}) =>{
 };
 
 Button.propTypes = {
-    title:propTypes.string.isrequired,
-    onPress : propTypes.func.isrequired,
+    title:propTypes.string.isRequired,
+    onPress : propTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({
